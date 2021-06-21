@@ -1,0 +1,30 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+#container {
+  width: 400px;
+  margin: 5em auto 0;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin-bottom: .4em;
+}
+
+.tabulation {
+  margin-left: 22px;
+}
+
+ul li:first-child input {
+  margin-left: 14px;
+}
+
+input[type="submit"] {
+  margin-top: 1em;
+}
