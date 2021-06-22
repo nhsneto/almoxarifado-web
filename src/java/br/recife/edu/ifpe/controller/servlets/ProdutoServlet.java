@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.recife.edu.ifpe.controller.servlets;
 
+import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,16 +31,44 @@ public class ProdutoServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    int codigo = 0;
+    try {
+      codigo = Integer.parseInt(request.getParameter("codigo"));
+    } catch (NumberFormatException e) {
+      response.setContentType("text/html;charset=UTF-8");
+      try (PrintWriter out = response.getWriter()) {
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Servlet ProdutoServlet</title>");    
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1 style=\"color:#f00;\">Produto não encontrado</h1>");
+        out.println("<a href=\"index.html\">Página Inicial</a>");
+        out.println("</body>");
+        out.println("</html>");
+      }
+    }
+    Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+    
     response.setContentType("text/html;charset=UTF-8");
     try (PrintWriter out = response.getWriter()) {
-      /* TODO output your page here. You may use following sample code. */
       out.println("<!DOCTYPE html>");
       out.println("<html>");
       out.println("<head>");
-      out.println("<title>Servlet ProdutoServlet</title>");      
+      out.println("<title>Servlet ProdutoServlet</title>");
+      out.println("<style>li {list-style: none;}</style>");
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>Modificado</h1>");
+      out.println("<h1 style=\"color:#1d7d36;\">Produto Recuperado</h1>");
+      out.println("<ul>");
+      out.println("<li>Código:    " + p.getCodigo() + "</li>");
+      out.println("<li>Nome:      " + p.getNome() + "</li>");
+      out.println("<li>Marca:     " + p.getMarca() + "</li>");
+      out.println("<li>Categoria: " + p.getCategoria() + "</li>");
+      out.println("<li>Descrição: " + p.getDescricao() + "</li>");
+      out.println("</ul>");
+      out.println("<a href=\"index.html\">Página Inicial</a>");
       out.println("</body>");
       out.println("</html>");
     }
@@ -66,7 +91,6 @@ public class ProdutoServlet extends HttpServlet {
     } catch(NumberFormatException e) {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
-      /* TODO output your page here. You may use following sample code. */
       out.println("<!DOCTYPE html>");
       out.println("<html>");
       out.println("<head>");
@@ -80,7 +104,6 @@ public class ProdutoServlet extends HttpServlet {
       out.println("</html>");
     }
   }
-    
     String nome = request.getParameter("nome");
     String marca = request.getParameter("marca");
     String categoria = request.getParameter("categoria");
@@ -94,6 +117,12 @@ public class ProdutoServlet extends HttpServlet {
     p.setDescricao(descricao);
     RepositorioProdutos.getCurrentInstance().create(p);
     
+    ItemEstoque item = new ItemEstoque();
+    item.setProduto(p);
+    item.setQuantidade(0);
+    item.setCodigo(p.getCodigo());
+    RepositorioEstoque.getCurrentInstance().read().addItem(item);
+    
     response.setContentType("text/html;charset=UTF-8");
     try (PrintWriter out = response.getWriter()) {
       /* TODO output your page here. You may use following sample code. */
@@ -103,7 +132,7 @@ public class ProdutoServlet extends HttpServlet {
       out.println("<title>Servlet ProdutoServlet</title>");      
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>Resposta do Server</h1>");
+      out.println("<h1>Produto " + p.getNome() + " adicionado com sucesso.</h1>");
       out.println("<a href=\"index.html\">Página inicial</a>");
       out.println("<a href=\"cadastroproduto.html\">Cadastrar outro produto</a>");
       out.println("</body>");
