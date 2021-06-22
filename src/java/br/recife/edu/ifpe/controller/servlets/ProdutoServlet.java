@@ -91,19 +91,19 @@ public class ProdutoServlet extends HttpServlet {
     } catch(NumberFormatException e) {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<title>Servlet ProdutoServlet</title>");      
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>Erro! O código do produto deve ser um valor numérico.</h1>");
-      out.println("<a href=\"index.html\">Página inicial</a>");
-      out.println("<a href=\"cadastroproduto.html\">Cadastrar outro produto</a>");
-      out.println("</body>");
-      out.println("</html>");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Servlet ProdutoServlet</title>");      
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1 style=\"color:#f00;\">Erro! O código do produto deve ser um valor numérico.</h1>");
+        out.println("<a href=\"index.html\">Página inicial</a>");
+        out.println("<a href=\"cadastroproduto.html\">Cadastrar outro produto</a>");
+        out.println("</body>");
+        out.println("</html>");
+      }
     }
-  }
     String nome = request.getParameter("nome");
     String marca = request.getParameter("marca");
     String categoria = request.getParameter("categoria");
@@ -125,14 +125,13 @@ public class ProdutoServlet extends HttpServlet {
     
     response.setContentType("text/html;charset=UTF-8");
     try (PrintWriter out = response.getWriter()) {
-      /* TODO output your page here. You may use following sample code. */
       out.println("<!DOCTYPE html>");
       out.println("<html>");
       out.println("<head>");
       out.println("<title>Servlet ProdutoServlet</title>");      
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>Produto " + p.getNome() + " adicionado com sucesso.</h1>");
+      out.println("<h1 style=\"color:#1d7d36;\">Produto " + p.getNome() + " adicionado com sucesso.</h1>");
       out.println("<a href=\"index.html\">Página inicial</a>");
       out.println("<a href=\"cadastroproduto.html\">Cadastrar outro produto</a>");
       out.println("</body>");
