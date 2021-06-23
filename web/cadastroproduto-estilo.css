@@ -26,5 +26,5 @@ ul li:first-child input {
 }
 
 input[type="submit"] {
-  margin-top: 1em;
+  margin: 1em 0 4em 0;
 }
