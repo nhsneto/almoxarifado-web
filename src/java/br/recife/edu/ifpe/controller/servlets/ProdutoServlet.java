@@ -3,6 +3,7 @@ package br.recife.edu.ifpe.controller.servlets;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
+import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaida;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +34,30 @@ public class ProdutoServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     String atualizar = request.getParameter("atualizar");
+    String deletar = request.getParameter("deletar");
     String codigoAux = request.getParameter("codigo");
+    
+    if (deletar != null) {
+      int codigo = Integer.parseInt(codigoAux);
+      Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+      RepositorioProdutos.getCurrentInstance().delete(p);
+      response.setContentType("text/html;charset=UTF-8");
+      try (PrintWriter out = response.getWriter()) {
+        out.println("<!DOCTYPE html>");
+        out.println("<html lang=\"pt-br\">");
+        out.println("<head>");
+        out.println("<title>Servlet ProdutoServlet</title>");
+        out.println("<meta charset=\"utf-8\" />");
+        out.println("<style>li {list-style: none;}</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1 style=\"color:#1d7d36;\">Produto deletado com sucesso.</h1>");
+        out.println("<a href=\"index.html\">Página Inicial</a>");
+        out.println("</body>");
+        out.println("</html>");
+      }
+    }
+    
     if (atualizar != null) {
       int codigo = Integer.parseInt(codigoAux);
       Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
@@ -69,7 +93,7 @@ public class ProdutoServlet extends HttpServlet {
       }
     }
     
-    if (codigoAux == null && atualizar == null) {
+    if (codigoAux == null && atualizar == null && deletar == null) {
       List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll();
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
@@ -91,7 +115,8 @@ public class ProdutoServlet extends HttpServlet {
           out.println("<td>" + p.getMarca() + "</td>");
           out.println("<td>" + p.getCategoria() + "</td>");
           out.println("<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "\">Visualizar</a></td>"
-                  + "<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&atualizar=1\">Atualizar</a></td>");
+                  + "<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&atualizar=1\">Atualizar</a></td>"
+                  + "<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&deletar=1\">Deletar</a></td>");
         }
         out.println("</table>");
         out.println("<a href=\"index.html\">Página Inicial</a>");
