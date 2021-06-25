@@ -33,9 +33,37 @@ public class ProdutoServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    String visualizar = request.getParameter("visualizar");
     String atualizar = request.getParameter("atualizar");
     String deletar = request.getParameter("deletar");
     String codigoAux = request.getParameter("codigo");
+    
+    if (visualizar != null) {
+      int codigo = Integer.parseInt(codigoAux);
+      Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+      response.setContentType("text/html;charset=UTF-8");
+      try (PrintWriter out = response.getWriter()) {
+        out.println("<!DOCTYPE html>");
+        out.println("<html lang=\"pt-br\">");
+        out.println("<head>");
+        out.println("<title>Servlet ProdutoServlet</title>");
+        out.println("<meta charset=\"utf-8\" />");
+        out.println("<style>li {list-style: none;}</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1 style=\"color:#1d7d36;\">Produto Recuperado</h1>");
+        out.println("<ul>");
+        out.println("<li>Código:    " + p.getCodigo() + "</li>");
+        out.println("<li>Nome:      " + p.getNome() + "</li>");
+        out.println("<li>Marca:     " + p.getMarca() + "</li>");
+        out.println("<li>Categoria: " + p.getCategoria() + "</li>");
+        out.println("<li>Descrição: " + p.getDescricao() + "</li>");
+        out.println("</ul>");
+        out.println("<a href=\"index.html\">Página Inicial</a>");
+        out.println("</body>");
+        out.println("</html>");
+      }
+    }
     
     if (deletar != null) {
       int codigo = Integer.parseInt(codigoAux);
@@ -85,7 +113,6 @@ public class ProdutoServlet extends HttpServlet {
 "        </ul>\n" +
 "      </form>");
         out.println("<ul>");
-        out.println("<li><a href=\"ProdutoServlet\">Produtos Cadastrados</a></li>");
         out.println("<li><a href=\"index.html\">Página Inicial</a></li>");
         out.println("</ul>");
         out.println("</body>");
@@ -93,7 +120,7 @@ public class ProdutoServlet extends HttpServlet {
       }
     }
     
-    if (codigoAux == null && atualizar == null && deletar == null) {
+    if (codigoAux == null && atualizar == null && deletar == null && visualizar == null) {
       List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll();
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
@@ -102,48 +129,24 @@ public class ProdutoServlet extends HttpServlet {
         out.println("<head>");
         out.println("<title>Servlet ProdutoServlet</title>");
         out.println("<meta charset=\"utf-8\" />");
-        out.println("<style>th, td {border: 1px solid #666;} caption {font-size: 1.5em; font-weight: 800;}</style>");
+        out.println("<style>th, td {border: 1px solid #666;} caption {font-size: 1.5em; font-weight: 800;} td a {text-decoration: none;}</style>");
         out.println("</head>");
         out.println("<body>");
         out.println("<table>");
         out.println("<caption>Produtos Cadastrados</caption>");
-        out.println("<tr><th>Código</th><th>Nome</th><th>Marca</th><th>Categoria</th><th>Operações</th></tr>");
+        out.println("<tr><th>Código</th><th>Nome</th><th>Marca</th><th>Categoria</th><th colspan=\"3\">Operações</th></tr>");
         for (Produto p: produtos) {
           out.println("<tr>");
           out.println("<td>" + p.getCodigo() + "</td>");
           out.println("<td>" + p.getNome() + "</td>");
           out.println("<td>" + p.getMarca() + "</td>");
           out.println("<td>" + p.getCategoria() + "</td>");
-          out.println("<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "\">Visualizar</a></td>"
+          out.println("<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&visualizar=1\">Visualizar</a></td>"
                   + "<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&atualizar=1\">Atualizar</a></td>"
                   + "<td><a href=\"ProdutoServlet?codigo=" + p.getCodigo() + "&deletar=1\">Deletar</a></td>");
+          out.println("</tr>");
         }
         out.println("</table>");
-        out.println("<a href=\"index.html\">Página Inicial</a>");
-        out.println("</body>");
-        out.println("</html>");
-      }
-    } else {
-      int codigo = Integer.parseInt(codigoAux);
-      Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
-      response.setContentType("text/html;charset=UTF-8");
-      try (PrintWriter out = response.getWriter()) {
-        out.println("<!DOCTYPE html>");
-        out.println("<html lang=\"pt-br\">");
-        out.println("<head>");
-        out.println("<title>Servlet ProdutoServlet</title>");
-        out.println("<meta charset=\"utf-8\" />");
-        out.println("<style>li {list-style: none;}</style>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1 style=\"color:#1d7d36;\">Produto Recuperado</h1>");
-        out.println("<ul>");
-        out.println("<li>Código:    " + p.getCodigo() + "</li>");
-        out.println("<li>Nome:      " + p.getNome() + "</li>");
-        out.println("<li>Marca:     " + p.getMarca() + "</li>");
-        out.println("<li>Categoria: " + p.getCategoria() + "</li>");
-        out.println("<li>Descrição: " + p.getDescricao() + "</li>");
-        out.println("</ul>");
         out.println("<a href=\"index.html\">Página Inicial</a>");
         out.println("</body>");
         out.println("</html>");
@@ -203,7 +206,7 @@ public class ProdutoServlet extends HttpServlet {
         }
         out.println("<ul>");
         out.println("<li><a href=\"index.html\">Página inicial</a></li>");
-        out.println("<li><a href=\"cadastroproduto.html\">Cadastrar outro produto</a></li>");
+        out.println("<li><a href=\"cadastro-produto.html\">Cadastrar outro produto</a></li>");
         out.println("</ul>");
         out.println("</body>");
         out.println("</html>");
@@ -222,7 +225,7 @@ public class ProdutoServlet extends HttpServlet {
         out.println("<p style=\"color:#f00;font-weight:800;\">O código do produto deve conter apenas caracteres numéricos.</p>");
         out.println("<ul>");
         out.println("<li><a href=\"index.html\">Página Inicial</a></li>");
-        out.println("<li><a href=\"cadastroproduto.html\">Cadastrar Produto</a></li>");
+        out.println("<li><a href=\"cadastro-produto.html\">Cadastrar Produto</a></li>");
         out.println("</ul>");
         out.println("</body>");
         out.println("</html>");

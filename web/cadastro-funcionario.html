@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Cadastro Funcionário</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="cadastro-funcionario-estilo.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1>Cadastro de Funcionário</h1>
+      <form method="post" action="FuncionarioServlet">
+        <ul>
+          <li><label>Código: <input type="number" name="codigo"/></label></li>
+          <li><label>Nome: <input type="text" name="nome"/></label></li>
+          <li><label>Departamento: <input type="text" name="departamento"/></label></li>
+          <li><input type="submit" value="Cadastrar"/></li>
+          <li><a href="index.html">Página Inicial</a></li>
+        </ul>
+      </form>
+    </div>
+  </body>
+</html>

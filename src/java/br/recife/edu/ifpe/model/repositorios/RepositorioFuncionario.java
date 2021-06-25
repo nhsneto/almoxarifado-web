@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.recife.edu.ifpe.model.repositorios;
 
 import br.recife.edu.ifpe.model.classes.Funcionario;
@@ -15,14 +10,13 @@ import java.util.List;
  */
 public class RepositorioFuncionario {
     private static RepositorioFuncionario myself = null;
-    
     private List<Funcionario> funcionarios = null;
     
     private RepositorioFuncionario(){
         this.funcionarios = new ArrayList<>();
     }
     
-    public static RepositorioFuncionario getCurrentInstance(){
+    public static RepositorioFuncionario getCurrentInstance() {
         if(myself == null)
             myself = new RepositorioFuncionario();
         
