@@ -22,6 +22,10 @@ public class ProdutoServletComJsp extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    int codigo = Integer.parseInt(request.getParameter("codigo"));
+    Produto produto = RepositorioProdutos.getCurrentInstance().read(codigo);
+    request.setAttribute("produto", produto);
+    getServletContext().getRequestDispatcher("/produtos.jsp").forward(request, response);
   }
 
   @Override

@@ -18,8 +18,7 @@
           <li><label>Marca: <input type="text" name="marca" class="tabulation"/></label></li>
           <li><label>Categoria: <input type="text" name="categoria"/></label></li>
           <li><label>Descrição: <textarea name="descricao" cols="22"></textarea></label></li>
-          <li><input type="submit" value="cadastrar"/></li>
-          <li><a href="index.html">Página Inicial</a></li>
+          <li><input type="submit" value="Cadastrar"/></li>
         </ul>
       </form>
     </div>
