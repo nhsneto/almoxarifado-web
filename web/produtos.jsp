@@ -53,6 +53,7 @@
         <td>
           <a href="ProdutoServletComJsp?codigo=<%= p.getCodigo() %>&redirect=visualizar">Visualizar</a>
           <a href="ProdutoServletComJsp?codigo=<%= p.getCodigo() %>&redirect=atualizar">Atualizar</a>
+          <a href="#" onclick="deletar(<%= p.getCodigo() %>)">Deletar</a>
         </td>
       </tr>
       <% } %>
@@ -81,6 +82,12 @@
       
       function modalVisualizacaoClose() {
         document.body.removeChild(modalVisualizacao);
+      }
+      
+      function deletar(codigo) {
+        fetch("ProdutoServletComJsp?codigo="+ codigo, {method: "delete"}).then(function(response) {
+          location.reload(); 
+        });
       }
     </script>
   </body>

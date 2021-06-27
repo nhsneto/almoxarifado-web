@@ -69,6 +69,16 @@ public class ProdutoServletComJsp extends HttpServlet {
   }
 
   @Override
+  protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    super.doDelete(request, response);
+    int codigo = Integer.parseInt(request.getParameter("codigo"));
+    Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+    RepositorioProdutos.getCurrentInstance().delete(p);
+    HttpSession session = request.getSession();
+    session.setAttribute("mensagem", "O produto "+ p.getNome() +" foi deletado com sucesso.");
+  }
+
+  @Override
   public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
