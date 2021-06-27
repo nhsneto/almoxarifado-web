@@ -42,7 +42,7 @@
         <th>Nome</th>
         <th>Marca</th>
         <th>Categoria</th>
-        <th colspan="3">Operações</th>
+        <th>Operações</th>
       </tr>
       <% for (Produto p: produtos) { %>
       <tr>
@@ -50,7 +50,10 @@
         <td><%= p.getNome() %></td>
         <td><%= p.getMarca() %></td>
         <td><%= p.getCategoria() %></td>
-        <td><a href="ProdutoServletComJsp?codigo=<%= p.getCodigo() %>&redirect=visualizar">Visualizar</a></td>
+        <td>
+          <a href="ProdutoServletComJsp?codigo=<%= p.getCodigo() %>&redirect=visualizar">Visualizar</a>
+          <a href="ProdutoServletComJsp?codigo=<%= p.getCodigo() %>&redirect=atualizar">Atualizar</a>
+        </td>
       </tr>
       <% } %>
     </table>

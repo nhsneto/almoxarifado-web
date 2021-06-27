@@ -37,6 +37,7 @@ public class ProdutoServletComJsp extends HttpServlet {
       String marca = request.getParameter("marca");
       String categoria = request.getParameter("categoria");
       String descricao = request.getParameter("descricao");
+      String a = request.getParameter("atualizar");
 
       Produto p = new Produto();
       p.setCodigo(codigo);
@@ -44,17 +45,22 @@ public class ProdutoServletComJsp extends HttpServlet {
       p.setMarca(marca);
       p.setCategoria(categoria);
       p.setDescricao(descricao);
-      RepositorioProdutos.getCurrentInstance().create(p);
-      
-      ItemEstoque item = new ItemEstoque();
-      item.setProduto(p);
-      item.setQuantidade(0);
-      item.setCodigo(p.getCodigo());
-      RepositorioEstoque.getCurrentInstance().read().addItem(item);
       
       HttpSession session = request.getSession();
-      session.setAttribute("mensagem", "O Produto " + p.getNome() + " foi cadastrado com sucesso.");
-      response.sendRedirect("produtos.jsp");
+      if (a != null) {
+        RepositorioProdutos.getCurrentInstance().update(p);
+        session.setAttribute("mensagem", "O Produto " + p.getNome() + " foi atualizado com sucesso.");
+        response.sendRedirect("produtos.jsp");
+      } else {
+        RepositorioProdutos.getCurrentInstance().create(p);
+        ItemEstoque item = new ItemEstoque();
+        item.setProduto(p);
+        item.setQuantidade(0);
+        item.setCodigo(p.getCodigo());
+        RepositorioEstoque.getCurrentInstance().read().addItem(item);
+        session.setAttribute("mensagem", "O Produto " + p.getNome() + " foi cadastrado com sucesso.");
+        response.sendRedirect("produtos.jsp");
+      }
     } catch (NumberFormatException e) {
       HttpSession session = request.getSession();
       session.setAttribute("mensagem", "Erro! O código do produto deve conter apenas caracteres numéricos.");

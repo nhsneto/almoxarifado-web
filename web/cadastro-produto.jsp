@@ -10,15 +10,16 @@
   </head>
   <body>
     <div id="container">
-      <h1>Cadastro de Produto</h1>
+      <h1>${(param.redirect eq "atualizar") ? "Atualizar Produto" : "Cadastrar Produto"}</h1>
       <form method="post" action="ProdutoServletComJsp">
         <ul>
-          <li><label>Código: <input type="text" name="codigo"/></label></li>
-          <li><label>Nome: <input type="text" name="nome" class="tabulation"/></label></li>
-          <li><label>Marca: <input type="text" name="marca" class="tabulation"/></label></li>
-          <li><label>Categoria: <input type="text" name="categoria"/></label></li>
-          <li><label>Descrição: <textarea name="descricao" cols="22"></textarea></label></li>
-          <li><input type="submit" value="Cadastrar"/></li>
+          <li><label>Código: <input type="text" name="codigo" value="${(param.redirect != null && param.redirect eq "atualizar") ? produto.codigo : ""}"/></label></li>
+          <li><label>Nome: <input type="text" name="nome" class="tabulation" value="${(param.redirect != null && param.redirect eq "atualizar") ? produto.nome : ""}"/></label></li>
+          <li><label>Marca: <input type="text" name="marca" class="tabulation" value="${(param.redirect != null && param.redirect eq "atualizar") ? produto.marca : ""}"/></label></li>
+          <li><label>Categoria: <input type="text" name="categoria" value="${(param.redirect != null && param.redirect eq "atualizar") ? produto.categoria : ""}"/></label></li>
+          <li><label>Descrição: <textarea name="descricao" cols="22">${(param.redirect != null && param.redirect eq "atualizar") ? produto.descricao : ""}</textarea></label></li>
+          <li><input type="hidden" name="${(param.redirect != null && param.redirect eq "atualizar") ? "atualizar" : "cadastrar"}" value="1"/></li>
+          <li><input type="submit" value="${(param.redirect != null && param.redirect eq "atualizar") ? "Atualizar" : "Cadastrar"}"/></li>
         </ul>
       </form>
     </div>
