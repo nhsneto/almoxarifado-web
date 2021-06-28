@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>Cadastro Produto</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Produtos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8"/>
     <style>
       #botaoNovoProduto {margin: 32px 0;}
@@ -86,7 +86,7 @@
       
       function deletar(codigo) {
         fetch("ProdutoServletComJsp?codigo="+ codigo, {method: "delete"}).then(function(response) {
-          location.reload(); 
+          location.reload();
         });
       }
     </script>
