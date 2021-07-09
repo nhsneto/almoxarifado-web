@@ -1,0 +1,22 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+#container {
+  width: 400px;
+  margin: 5em auto 0;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin-bottom: .4em;
+}
+
+input[type="submit"] {
+  margin: 1em 0 4em 0;
+}
