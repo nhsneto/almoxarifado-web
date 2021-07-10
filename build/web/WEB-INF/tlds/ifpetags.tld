@@ -10,7 +10,7 @@
          <init-param>
             <param-name>parameter</param-name>
             <param-value>value</param-value>
-   </init-param>
+          </init-param>
      </validator>
   -->
   <!-- A tag library can register Servlet Context event listeners in
@@ -25,5 +25,38 @@
     <body-content>empty</body-content>
     <attribute></attribute>
     <tag-class>br.recife.edu.ifpe.controller.tags.HelloTag</tag-class>
+  </tag>
+  <tag>
+    <name>tag2</name>
+    <body-content>scriptless</body-content>
+    <tag-class>br.recife.edu.ifpe.controller.tags.Tag2</tag-class>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <type>String</type>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr3</name>
+      <requred>true</requred>
+      <type>List</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>carregaproduto</name>
+    <body-content>scriptless</body-content>
+    <tag-class>br.recife.edu.ifpe.controller.tags.CarregaProdutoTag</tag-class>
+  </tag>
+  <tag>
+    <name>carrega</name>
+    <body-content>scriptless</body-content>
+    <tag-class>br.recife.edu.ifpe.controller.tags.Carrega</tag-class>
+    <attribute>
+      <name>lista</name>
+      <required>true</required>
+      <type>String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
 </taglib>

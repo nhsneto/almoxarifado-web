@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="br.recife.edu.ifpe.model.repositorios.RepositorioProdutos"%>
 <%@page import="br.recife.edu.ifpe.model.classes.Produto"%>
 <%@page import="java.util.List"%>
@@ -7,7 +8,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
+    <!--
     <ifpe:helloworld/>
+    <c:if test="${2 + 2 == 4}">
+      <h1>Entrou no if</h1>
+    </c:if>
+    -->
     <title>Produtos</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8"/>
@@ -17,6 +23,7 @@
       th, td {border: 1px solid #888;}
       h1 + p {color:#1d7d36; font-weight: 600;}
       p + #botaoNovoProduto {margin: 0 0 32px;}
+      #home {display: block; margin-top: 2em;}
     </style>
   </head>
   <body>
@@ -38,6 +45,8 @@
       <button onclick="modalVisualizacaoClose()">Fechar</button>
     </div>
     <% List<Produto> produtos = RepositorioProdutos.getCurrentInstance().readAll(); %>
+    <% request.setAttribute("produtos", produtos); %>
+    <!-- <ifpe:tag2 var="teste" attr3="${produtos}">Testando o corpo da tag2...</ifpe:tag2> -->
     <table>
       <tr>
         <th>Código</th>
@@ -60,6 +69,7 @@
       </tr>
       <% } %>
     </table>
+    <a href="index.html" id="home">Página Inicial</a>
     <script>
       var modalCadastro = document.getElementById("modal-cadastro");
       var modalVisualizacao = document.getElementById("modal-visualizacao");

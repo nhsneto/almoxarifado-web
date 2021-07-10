@@ -18,6 +18,7 @@
       li {list-style: none;}
       th, td {border: 1px solid #888;}
       tr > td:not(:first-child) {text-align: center;}
+      #home {display: block; margin-top: 2em;}
     </style>
   </head>
   <body>
@@ -65,6 +66,7 @@
       </tr>
       <%}%>
     </table>
+    <a href="index.html" id="home">Página Inicial</a>
     <script>
       modalCadastro = document.getElementById("modalCadastro");
       modalVisualizacao = document.getElementById("modalVisualizacao");
