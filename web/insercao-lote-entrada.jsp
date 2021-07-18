@@ -12,6 +12,7 @@
       tr > td:not(:first-child) {text-align: center;}
       caption {font-size: 1.2em; font-weight: 800;}
       table {margin-bottom: 2em;}
+      .plus {font-size: 20px; font-weight: 900; color: #2dbd53; text-decoration: none;}
     </style>
   </head>
   <body>
@@ -24,6 +25,7 @@
         <th>Nome</th>
         <th>Marca</th>
         <th>Categoria</th>
+        <th>Inserir</th>
       </tr>
       <c:forEach var="p" items="${produtos}">
         <tr>
@@ -31,6 +33,7 @@
           <td>${p.nome}</td>
           <td>${p.marca}</td>
           <td>${p.categoria}</td>
+          <td><a href="#" class="plus" onclick="adiciona(${p.codigo})">+</a></td>
         </tr>
       </c:forEach>
     </table>
@@ -50,6 +53,34 @@
         </tr>
       </c:forEach>
     </table>
+    <table>
+      <caption>Lote Entrada Produtos</caption>
+      <tr>
+        <th>Código</th>
+        <th>Nome</th>
+        <th>Marca</th>
+        <th>Categoria</th>
+        <th>Quantidade</th>
+        <th>Inserir</th>
+      </tr>
+      <c:forEach var="i" items="${loteEntrada.itens}">
+        <tr>
+          <td>${i.produto.codigo}</td>
+          <td>${i.produto.nome}</td>
+          <td>${i.produto.marca}</td>
+          <td>${i.produto.categoria}</td>
+          <td>${i.quantidade}</td>
+          <td><a href="#" class="plus" onclick="adiciona(${p.codigo})">+</a></td>
+        </tr>
+      </c:forEach>
+    </table>
     <a href="index.html">Página Inicial</a>
+    <script>
+      function adiciona(codigo) {
+        fetch("LoteEntradaServlet?codigo=" + codigo, {method: "put"}).then(function() {
+          location.reload();
+        });
+      }
+    </script>
   </body>
 </html>
