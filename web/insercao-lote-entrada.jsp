@@ -8,24 +8,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JSP Page</title>
     <style>
+      h1 + p {font-weight: 900; color: #27b04b;}
+      table {margin-bottom: 2em;}
       th, td {border: 1px solid #888;}
       tr > td:not(:first-child) {text-align: center;}
       caption {font-size: 1.2em; font-weight: 800;}
-      table {margin-bottom: 2em;}
-      .plus {font-size: 20px; font-weight: 900; color: #2dbd53; text-decoration: none;}
+      .botaoAdicionar {border: none; background-color: #27b04b; color: #fff; padding: 2px 10px;}
+      .botaoAdicionar:active {background-color: #0f0;}
+      .botaoRemover {border: none; background-color: #d40d0d; color: #fff; padding: 2px 10px;}
+      .botaoRemover:active {background-color: #f00;}
     </style>
   </head>
   <body>
     <h1>Inserção Lote de Entrada</h1>
+    <p><c:out value="${msg}"/></p>
+    <c:remove var="msg" scope="session"/>
     <ifpe:carrega lista="Produto"/> <!-- Tag carrega com o valor 'Produto' para o atributo lista -->
     <table>
-      <caption>Produtos</caption>
+      <caption>Produtos Cadastrados</caption>
       <tr>
         <th>Código</th>
         <th>Nome</th>
         <th>Marca</th>
         <th>Categoria</th>
-        <th>Inserir</th>
+        <th>Adicionar</th>
       </tr>
       <c:forEach var="p" items="${produtos}">
         <tr>
@@ -33,7 +39,9 @@
           <td>${p.nome}</td>
           <td>${p.marca}</td>
           <td>${p.categoria}</td>
-          <td><a href="#" class="plus" onclick="adiciona(${p.codigo})">+</a></td>
+          <td>
+            <button class="botaoAdicionar" onclick="adiciona(${p.codigo})">+</button>
+          </td>
         </tr>
       </c:forEach>
     </table>
@@ -53,31 +61,41 @@
         </tr>
       </c:forEach>
     </table>
-    <table>
-      <caption>Lote Entrada Produtos</caption>
-      <tr>
-        <th>Código</th>
-        <th>Nome</th>
-        <th>Marca</th>
-        <th>Categoria</th>
-        <th>Quantidade</th>
-        <th>Inserir</th>
-      </tr>
-      <c:forEach var="i" items="${loteEntrada.itens}">
+    <c:if test="${loteEntrada != null}">
+      <table>
+        <caption>Produtos Inseridos no Lote de Entrada</caption>
         <tr>
-          <td>${i.produto.codigo}</td>
-          <td>${i.produto.nome}</td>
-          <td>${i.produto.marca}</td>
-          <td>${i.produto.categoria}</td>
-          <td>${i.quantidade}</td>
-          <td><a href="#" class="plus" onclick="adiciona(${p.codigo})">+</a></td>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Marca</th>
+          <th>Categoria</th>
+          <th>Quantidade</th>
+          <th>Operações</th>
         </tr>
-      </c:forEach>
-    </table>
+        <c:forEach var="i" items="${loteEntrada.itens}">
+          <tr>
+            <td>${i.produto.codigo}</td>
+            <td>${i.produto.nome}</td>
+            <td>${i.produto.marca}</td>
+            <td>${i.produto.categoria}</td>
+            <td>${i.quantidade}</td>
+            <td>
+              <button class="botaoAdicionar" onclick="adiciona(${i.produto.codigo})">+</button>
+              <button class="botaoRemover" onclick="remove(${i.produto.codigo})">-</button>
+            </td>
+          </tr>
+        </c:forEach>
+      </table>
+    </c:if>
     <a href="index.html">Página Inicial</a>
     <script>
       function adiciona(codigo) {
-        fetch("LoteEntradaServlet?codigo=" + codigo, {method: "put"}).then(function() {
+        fetch("LoteEntradaServlet?operacao=adicionar&codigo=" + codigo, {method: "put"}).then(function() {
+          location.reload();
+        });
+      }
+      function remove(codigo) {
+        fetch("LoteEntradaServlet?operacao=remover&codigo=" + codigo, {method: "put"}).then(function() {
           location.reload();
         });
       }

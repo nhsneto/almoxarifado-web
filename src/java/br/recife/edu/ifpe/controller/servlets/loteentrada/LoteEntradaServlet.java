@@ -32,6 +32,7 @@ public class LoteEntradaServlet extends HttpServlet {
   @Override
   protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     super.doPut(req, resp);
+    String operacao = req.getParameter("operacao");
     int codigo = Integer.parseInt(req.getParameter("codigo"));
     HttpSession session = req.getSession();
     LoteEntrada loteEntrada = (LoteEntrada) session.getAttribute("loteEntrada");
@@ -39,23 +40,42 @@ public class LoteEntradaServlet extends HttpServlet {
       loteEntrada = new LoteEntrada();
       session.setAttribute("loteEntrada", loteEntrada);
     }
+    
     boolean controle = false;
-    for (ItemEntrada item: loteEntrada.getItens()) {
-      if (item.getProduto().getCodigo() == codigo) {
-        item.setQuantidade(item.getQuantidade() + 1);
-        controle = true;
-        session.setAttribute("msg", "O produto " + item.getProduto().getNome()+ " foi incrementado no lote com sucesso.");
-        break;
+    if (operacao.equals("adicionar")) {
+      for (ItemEntrada item : loteEntrada.getItens()) {
+        if (item.getProduto().getCodigo() == codigo) {
+          item.setQuantidade(item.getQuantidade() + 1);
+          controle = true;
+          session.setAttribute("msg", "O produto " + item.getProduto().getNome() + " foi incrementado no lote com sucesso.");
+          break;
+        }
+      }
+      if (!controle) {
+        ItemEntrada item = new ItemEntrada();
+        Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
+        item.setProduto(p);
+        item.setCodigo((int) (Math.random() * 10000));
+        item.setQuantidade(1);
+        loteEntrada.addItem(item);
+        session.setAttribute("msg", "O produto " + p.getNome() + " foi inserido no lote com sucesso.");
+      }
+    } else if (operacao.equals("remover")) {
+      for (ItemEntrada i : loteEntrada.getItens()) {
+        if (i.getProduto().getCodigo() == codigo) {
+          if (i.getQuantidade() == 1) {
+            session.setAttribute("msg", "O produto " + i.getProduto().getNome() + " foi removido do lote com sucesso.");
+            loteEntrada.getItens().remove(i);
+            break;
+          }
+          i.setQuantidade(i.getQuantidade() - 1);
+          break;
+        }
       }
     }
-    if (!controle) {
-      ItemEntrada item = new ItemEntrada();
-      Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
-      item.setProduto(p);
-      item.setCodigo((int) (Math.random() * 10000));
-      item.setQuantidade(1);
-      loteEntrada.addItem(item);
-      session.setAttribute("msg", "O produto " + p.getNome() + " foi inserido no lote com sucesso.");
+    
+    if (loteEntrada.getItens().isEmpty()) {
+      session.removeAttribute("loteEntrada");
     }
   }
 
