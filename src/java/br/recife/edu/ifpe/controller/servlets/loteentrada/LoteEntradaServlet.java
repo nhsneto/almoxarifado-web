@@ -5,7 +5,6 @@ import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +44,8 @@ public class LoteEntradaServlet extends HttpServlet {
       if (item.getProduto().getCodigo() == codigo) {
         item.setQuantidade(item.getQuantidade() + 1);
         controle = true;
+        session.setAttribute("msg", "O produto " + item.getProduto().getNome()+ " foi incrementado no lote com sucesso.");
+        break;
       }
     }
     if (!controle) {
@@ -55,9 +56,6 @@ public class LoteEntradaServlet extends HttpServlet {
       item.setQuantidade(1);
       loteEntrada.addItem(item);
       session.setAttribute("msg", "O produto " + p.getNome() + " foi inserido no lote com sucesso.");
-    } else {
-      Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
-      session.setAttribute("msg", "O produto " + p.getNome() + " foi incrementado no lote com sucesso.");
     }
   }
 
@@ -65,5 +63,4 @@ public class LoteEntradaServlet extends HttpServlet {
   public String getServletInfo() {
     return "Short description";
   }
-
 }
