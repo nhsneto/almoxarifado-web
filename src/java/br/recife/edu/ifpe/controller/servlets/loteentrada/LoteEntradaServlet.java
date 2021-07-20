@@ -1,8 +1,12 @@
 package br.recife.edu.ifpe.controller.servlets.loteentrada;
 
+import br.recife.edu.ifpe.model.classes.Estoque;
 import br.recife.edu.ifpe.model.classes.ItemEntrada;
+import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
+import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -27,6 +31,27 @@ public class LoteEntradaServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    LoteEntrada loteEntrada = (LoteEntrada) session.getAttribute("loteEntrada");
+    Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
+    for (ItemEntrada itemEntrada : loteEntrada.getItens()) {
+      if (itemEntrada.getQuantidade() > 10) {
+        session.setAttribute("msg", "A quantidade máxima permitida do produto " + itemEntrada.getProduto().getNome() + " foi excedida.");
+        response.sendError(500);
+        return;
+      }
+    }
+    for (ItemEntrada itemEntrada : loteEntrada.getItens()) {
+      for (ItemEstoque itemEstoque : estoque.getItens()) {
+        if (itemEntrada.getProduto().getCodigo() == itemEstoque.getProduto().getCodigo()) {
+          itemEstoque.adiciona(itemEntrada.getQuantidade());
+          break;
+        }
+      }
+    }
+    RepositorioLoteEntrada.getCurrentInstance().create(loteEntrada);
+    session.removeAttribute("loteEntrada");
+    session.setAttribute("msg", "O lote de entrada foi inserido com sucesso.");
   }
 
   @Override

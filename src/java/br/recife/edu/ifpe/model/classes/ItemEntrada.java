@@ -6,7 +6,6 @@
 package br.recife.edu.ifpe.model.classes;
 
 public class ItemEntrada {
-    
     private int codigo;
     private Produto produto;
     private int quantidade;
@@ -34,7 +33,4 @@ public class ItemEntrada {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
-    
 }

@@ -17,6 +17,7 @@
       .botaoAdicionar:active {background-color: #0f0;}
       .botaoRemover {border: none; background-color: #d40d0d; color: #fff; padding: 2px 10px;}
       .botaoRemover:active {background-color: #f00;}
+      #botaoCadastrar {display: block; margin-bottom: 2em;}
     </style>
   </head>
   <body>
@@ -86,6 +87,7 @@
           </tr>
         </c:forEach>
       </table>
+      <button id="botaoCadastrar" onclick="cadastrarLote()">Cadastrar Lote</button>
     </c:if>
     <a href="index.html">Página Inicial</a>
     <script>
@@ -94,10 +96,24 @@
           location.reload();
         });
       }
+      
       function remove(codigo) {
         fetch("LoteEntradaServlet?operacao=remover&codigo=" + codigo, {method: "put"}).then(function() {
           location.reload();
         });
+      }
+      
+      function cadastrarLote() {
+        fetch("LoteEntradaServlet", {method: "post"})
+                .then(function(response) {
+                  if (response.status === 500) {
+                    location.reload();
+                  } else {
+                    location.href = "index.html";
+                  }
+                }).catch(function(erro) {
+                  location.reload();
+                });
       }
     </script>
   </body>
