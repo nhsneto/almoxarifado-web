@@ -23,7 +23,9 @@
       th, td {border: 1px solid #888;}
       h1 + p {color:#1d7d36; font-weight: 600;}
       p + #botaoNovoProduto {margin: 0 0 32px;}
-      #home {display: block; margin-top: 2em;}
+      #links {margin-top: 2em;}
+      #links > ul {padding: 0;}
+      #links li {list-style: none; margin-bottom: .5em;}
     </style>
   </head>
   <body>
@@ -69,7 +71,12 @@
       </tr>
       <% } %>
     </table>
-    <a href="index.html" id="home">Página Inicial</a>
+    <div id="links">
+      <ul>
+        <li><a href="index.html" id="home">Página Inicial</a></li>
+        <li><a href="insercao-lote-entrada.jsp">Inserção - Lote de Entrada</a></li>
+      </ul>
+    </div>
     <script>
       var modalCadastro = document.getElementById("modal-cadastro");
       var modalVisualizacao = document.getElementById("modal-visualizacao");

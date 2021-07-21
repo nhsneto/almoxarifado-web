@@ -26,6 +26,7 @@
     <attribute></attribute>
     <tag-class>br.recife.edu.ifpe.controller.tags.HelloTag</tag-class>
   </tag>
+  
   <tag>
     <name>tag2</name>
     <body-content>scriptless</body-content>
@@ -38,16 +39,18 @@
     </attribute>
     <attribute>
       <name>attr3</name>
-      <requred>true</requred>
+      <required>true</required>
       <type>List</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
+  
   <tag>
     <name>carregaproduto</name>
     <body-content>scriptless</body-content>
     <tag-class>br.recife.edu.ifpe.controller.tags.CarregaProdutoTag</tag-class>
   </tag>
+  
   <tag>
     <name>carrega</name>
     <body-content>scriptless</body-content>
