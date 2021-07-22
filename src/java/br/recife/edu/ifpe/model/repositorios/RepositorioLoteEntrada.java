@@ -10,54 +10,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioLoteEntrada {
-    
-    private static RepositorioLoteEntrada myself = null;
-    
-    private List<LoteEntrada> lotes = null;
-    
-    private RepositorioLoteEntrada(){
-        this.lotes = new ArrayList<>();
+  private static RepositorioLoteEntrada myself = null;
+  private List<LoteEntrada> lotes = null;
+  private int codigoLote;
+
+  private RepositorioLoteEntrada() {
+    this.lotes = new ArrayList<>();
+  }
+
+  public static RepositorioLoteEntrada getCurrentInstance() {
+    if (myself == null) {
+      myself = new RepositorioLoteEntrada();
     }
-    
-    public static RepositorioLoteEntrada getCurrentInstance(){
-        if(myself == null)
-            myself = new RepositorioLoteEntrada();
-        
-        return myself;
+
+    return myself;
+  }
+
+  public void create(LoteEntrada le) {
+    le.setCodigo(this.codigoLote++);
+    this.lotes.add(le);
+  }
+
+  public void update(LoteEntrada le) {
+
+    for (LoteEntrada aux : this.lotes) {
+      if (aux.getCodigo() == le.getCodigo()) {
+
+        aux.setDescricao(le.getDescricao());
+        return;
+
+      }
     }
-    
-    public void create(LoteEntrada le){
-        this.lotes.add(le);
+
+  }
+
+  public LoteEntrada read(int codigo) {
+    for (LoteEntrada aux : this.lotes) {
+      if (aux.getCodigo() == codigo) {
+        return aux;
+      }
     }
-    
-    public void update(LoteEntrada le){
-        
-        for(LoteEntrada aux: this.lotes){
-            if(aux.getCodigo() == le.getCodigo()){
-                
-                aux.setDescricao(le.getDescricao());
-                return;
-                
-            }
-        }
-        
-    }
-    
-    public LoteEntrada read(int codigo){
-        for(LoteEntrada aux: this.lotes){
-            if(aux.getCodigo() == codigo){
-                return aux;
-            }
-        }
-        return null;
-    }
-    
-    public void delete(LoteEntrada le){
-        this.lotes.remove(le);
-    }
-    
-    public List<LoteEntrada> readAll(){
-        return this.lotes;
-    }
-    
+    return null;
+  }
+
+  public void delete(LoteEntrada le) {
+    this.lotes.remove(le);
+  }
+
+  public List<LoteEntrada> readAll() {
+    return this.lotes;
+  }
 }

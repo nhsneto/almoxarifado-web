@@ -111,7 +111,7 @@
                   } else {
                     location.href = "index.html";
                   }
-                }).catch(function(erro) {
+                }).catch(function() {
                   location.reload();
                 });
       }

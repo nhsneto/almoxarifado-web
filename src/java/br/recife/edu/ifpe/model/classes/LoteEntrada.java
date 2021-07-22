@@ -9,7 +9,7 @@ public class LoteEntrada {
   private List<ItemEntrada> itens;
   private Date data;
   /*
-    * Neste campo ficarão armazenadas as informações de documentos
+   * Neste campo ficarão armazenadas as informações de documentos
    */
   private String descricao;
 

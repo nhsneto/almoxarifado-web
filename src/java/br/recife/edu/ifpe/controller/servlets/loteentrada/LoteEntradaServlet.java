@@ -9,6 +9,7 @@ import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,22 @@ public class LoteEntradaServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    int codigo = Integer.parseInt(request.getParameter("codigo"));
+    LoteEntrada loteEntrada = RepositorioLoteEntrada.getCurrentInstance().read(codigo);
+    String responseJSON = "{\"codigo\":" + loteEntrada.getCodigo() + ", "
+                          + "\"descricao\": \"" + loteEntrada.getDescricao() + "\", "
+                          + "\"itens\": [";
+    for (ItemEntrada i : loteEntrada.getItens()) {
+      responseJSON += "{\"codigo\": " + i.getCodigo() + ", \"nomeProduto\": \"" + i.getProduto().getNome() + "\"}";
+      if (loteEntrada.getItens().indexOf(i) != loteEntrada.getItens().size() - 1) {
+        responseJSON += ", ";
+      }
+    }
+    responseJSON += "]}";
+    response.setContentType("text/plain");
+    try (PrintWriter out = response.getWriter()) {
+      out.println(responseJSON);
+    }
   }
 
   @Override

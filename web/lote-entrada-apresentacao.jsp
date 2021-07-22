@@ -11,27 +11,72 @@
     <style>
       #links {margin-top: 2em;}
       th, td {border: 1px solid #888; text-align: center;}
+      .modal {position: absolute; top: 100px; left: 530px;}
+      .tabelaItens {margin-bottom: 2em;}
     </style>
   </head>
   <body>
     <h1>Lotes Inseridos</h1>
-    <ifpe:carrega lista="LoteEntrada"/>
     <table>
       <tr>
         <th>Data</th>
         <th>Código</th>
         <th>Quantidade Total</th>
+        <th>Operações</th>
       </tr>
+      <ifpe:carrega lista="LoteEntrada"/>
       <c:forEach var="lote" items="${lotesEntrada}">
         <tr>
           <td>${lote.data}</td>
           <td>${lote.codigo}</td>
           <td>${lote.quantidadeTotal}</td>
+          <td><button onclick="visualizar(${lote.codigo})">Visualizar</button></td>
         </tr>
       </c:forEach>
     </table>
     <div id="links">
       <a href="index.html">Página Inicial</a>
     </div>
+      <script>
+        var modal;
+        function visualizar(codigo) {
+          fetch("LoteEntradaServlet?codigo=" + codigo, {method: "get"}).then(function(response) {
+            response.text().then(function(text) {
+              let lote = JSON.parse(text);
+              let titulo = document.createElement("h1");
+              titulo.innerHTML = "Visualizar Lote Entrada";
+              let frase = document.createElement("p");
+              frase.innerHTML = "Codigo: " + lote.codigo + "<br/>Descrição: " + lote.descricao;
+              let tabela = document.createElement("table");
+              tabela.setAttribute("class", "tabelaItens");
+              for (let i = 0; i < lote.itens.length; i++) {
+                let celula1 = document.createElement("td");
+                celula1.innerHTML = lote.itens[i].codigo;
+                let celula2 = document.createElement("td");
+                celula2.innerHTML = lote.itens[i].nomeProduto;
+                let linha = document.createElement("tr");
+                linha.appendChild(celula1);
+                linha.appendChild(celula2);
+                tabela.appendChild(linha);
+              }
+              let botao = document.createElement("button");
+              botao.setAttribute("onclick", "fecharModal()");
+              botao.innerHTML = "Fechar";
+              modal = document.createElement("div");
+              modal.setAttribute("class", "modal");
+              modal.appendChild(titulo);
+              modal.appendChild(frase);
+              modal.appendChild(tabela);
+              modal.appendChild(botao);
+              document.body.appendChild(modal);
+            });
+          });
+        }
+        
+        function fecharModal() {
+          document.body.removeChild(modal);
+          modal = "";
+        }
+      </script>
   </body>
 </html>
