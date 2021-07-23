@@ -33,7 +33,8 @@ public class LoteEntradaServlet extends HttpServlet {
                           + "\"descricao\": \"" + loteEntrada.getDescricao() + "\", "
                           + "\"itens\": [";
     for (ItemEntrada i : loteEntrada.getItens()) {
-      responseJSON += "{\"codigo\": " + i.getCodigo() + ", \"nomeProduto\": \"" + i.getProduto().getNome() + "\"}";
+      responseJSON += "{\"codigo\": " + i.getCodigo() + ", \"nomeProduto\": \"" + i.getProduto().getNome() + "\", "
+                      + "\"quantidade\": " + i.getQuantidade() + "}";
       if (loteEntrada.getItens().indexOf(i) != loteEntrada.getItens().size() - 1) {
         responseJSON += ", ";
       }

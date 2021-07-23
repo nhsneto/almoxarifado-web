@@ -109,7 +109,7 @@
                   if (response.status === 500) {
                     location.reload();
                   } else {
-                    location.href = "index.html";
+                    location.href = "lote-entrada-apresentacao.jsp";
                   }
                 }).catch(function() {
                   location.reload();

@@ -9,6 +9,7 @@
     <title>JSP Page</title>
     <meta charset="utf-8"/>
     <style>
+      #feedback {font-weight: 900; color: #1d7d36;}
       #links {margin-top: 2em;}
       th, td {border: 1px solid #888; text-align: center;}
       .modal {position: absolute; top: 100px; left: 530px;}
@@ -17,12 +18,14 @@
   </head>
   <body>
     <h1>Lotes Inseridos</h1>
+    <p id="feedback"><c:out value="${msg}"/></p>
+    <c:remove var="msg" scope="session"/>
     <table>
       <tr>
         <th>Data</th>
         <th>Código</th>
         <th>Quantidade Total</th>
-        <th>Operações</th>
+        <th>Visualizar</th>
       </tr>
       <ifpe:carrega lista="LoteEntrada"/>
       <c:forEach var="lote" items="${lotesEntrada}">
@@ -54,9 +57,12 @@
                 celula1.innerHTML = lote.itens[i].codigo;
                 let celula2 = document.createElement("td");
                 celula2.innerHTML = lote.itens[i].nomeProduto;
+                let celula3 = document.createElement("td");
+                celula3.innerHTML = lote.itens[i].quantidade;
                 let linha = document.createElement("tr");
                 linha.appendChild(celula1);
                 linha.appendChild(celula2);
+                linha.appendChild(celula3);
                 tabela.appendChild(linha);
               }
               let botao = document.createElement("button");

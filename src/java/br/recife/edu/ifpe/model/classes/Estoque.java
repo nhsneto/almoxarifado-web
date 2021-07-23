@@ -9,31 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Estoque {
-    
-   private int codigo;
-   private List<ItemEstoque> itens;
-   
-   public Estoque(){
-       this.itens = new ArrayList<>();
-   }
+  private int codigo;
+  private List<ItemEstoque> itens;
 
-    public int getCodigo() {
-        return codigo;
-    }
+  public Estoque() {
+    this.itens = new ArrayList<>();
+  }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+  public int getCodigo() {
+    return codigo;
+  }
 
-    public List<ItemEstoque> getItens() {
-        return itens;
-    }
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
+  }
 
-    public void setItens(List<ItemEstoque> itens) {
-        this.itens = itens;
-    }
-    
-    public void addItem(ItemEstoque i){
-        this.itens.add(i);
-    }
+  public List<ItemEstoque> getItens() {
+    return itens;
+  }
+
+  public void setItens(List<ItemEstoque> itens) {
+    this.itens = itens;
+  }
+
+  public void addItem(ItemEstoque i) {
+    this.itens.add(i);
+  }
 }
