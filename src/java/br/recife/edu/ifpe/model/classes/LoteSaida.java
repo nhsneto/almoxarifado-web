@@ -10,64 +10,60 @@ import java.util.Date;
 import java.util.List;
 
 public class LoteSaida {
-    
-    private int codigo;
-    private List<ItemSaida> itens;
-    private Date data;
-    private Funcionario responsavel;
-            
-    /*
-    * Neste campo ficarão armazenadas as informações de documentos
-    */
-    private String descricao;
-    
-    public LoteSaida(){
-        this.itens = new ArrayList<>();
-        this.data = new Date();
-    }
+  private int codigo;
+  private List<ItemSaida> itens;
+  private Date data;
+  private Funcionario responsavel;
 
-    public int getCodigo() {
-        return codigo;
-    }
+  // Neste campo ficarão armazenadas as informações de documentos
+  private String descricao;
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+  public LoteSaida() {
+    this.itens = new ArrayList<>();
+    this.data = new Date();
+  }
 
-    public List<ItemSaida> getItens() {
-        return itens;
-    }
+  public int getCodigo() {
+    return codigo;
+  }
 
-    public void setItens(List<ItemSaida> itens) {
-        this.itens = itens;
-    }
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
+  }
 
-    public Date getData() {
-        return data;
-    }
+  public List<ItemSaida> getItens() {
+    return itens;
+  }
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+  public void setItens(List<ItemSaida> itens) {
+    this.itens = itens;
+  }
 
-    public String getDescricao() {
-        return descricao;
-    }
+  public Date getData() {
+    return data;
+  }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-    
-    public void addItem(ItemSaida i){
-        this.itens.add(i);
-    }
+  public void setData(Date data) {
+    this.data = data;
+  }
 
-    public Funcionario getResponsavel() {
-        return responsavel;
-    }
+  public String getDescricao() {
+    return descricao;
+  }
 
-    public void setResponsavel(Funcionario responsavel) {
-        this.responsavel = responsavel;
-    }
-    
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
+  }
+
+  public void addItem(ItemSaida i) {
+    this.itens.add(i);
+  }
+
+  public Funcionario getResponsavel() {
+    return responsavel;
+  }
+
+  public void setResponsavel(Funcionario responsavel) {
+    this.responsavel = responsavel;
+  }
 }
