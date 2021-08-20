@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="ifpe" uri="br.recife.edu.ifpe.customtags"%>
 
@@ -50,6 +50,7 @@
               titulo.innerHTML = "Visualizar Lote Entrada";
               let frase = document.createElement("p");
               frase.innerHTML = "Codigo: " + lote.codigo + "<br/>Descrição: " + lote.descricao;
+              
               let tabela = document.createElement("table");
               tabela.setAttribute("class", "tabelaItens");
               for (let i = 0; i < lote.itens.length; i++) {
@@ -59,15 +60,18 @@
                 celula2.innerHTML = lote.itens[i].nomeProduto;
                 let celula3 = document.createElement("td");
                 celula3.innerHTML = lote.itens[i].quantidade;
+                
                 let linha = document.createElement("tr");
                 linha.appendChild(celula1);
                 linha.appendChild(celula2);
                 linha.appendChild(celula3);
                 tabela.appendChild(linha);
               }
+              
               let botao = document.createElement("button");
               botao.setAttribute("onclick", "fecharModal()");
               botao.innerHTML = "Fechar";
+              
               modal = document.createElement("div");
               modal.setAttribute("class", "modal");
               modal.appendChild(titulo);

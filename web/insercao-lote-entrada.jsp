@@ -17,7 +17,8 @@
       .botaoAdicionar:active {background-color: #0f0;}
       .botaoRemover {border: none; background-color: #d40d0d; color: #fff; padding: 2px 10px;}
       .botaoRemover:active {background-color: #f00;}
-      #botaoCadastrar {display: block; margin-bottom: 2em;}
+      #botaoCadastrar {display: block; margin: 2em 0 2em;}
+      label[for] {position: relative; bottom: 1em; font-weight: 900;}
     </style>
   </head>
   <body>
@@ -71,6 +72,10 @@
           </tr>
         </c:forEach>
       </table>
+      <div>
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" cols="41"></textarea>
+      </div>
       <button id="botaoCadastrar" onclick="cadastrarLote()">Cadastrar Lote</button>
     </c:if>
     <a href="index.html">Página Inicial</a>
@@ -88,7 +93,9 @@
       }
       
       function cadastrarLote() {
-        fetch("LoteEntradaServlet", {method: "post"})
+        let textInput = document.getElementById("descricao");
+        let value = textInput.value;
+        fetch("LoteEntradaServlet?descricao=" + value, {method: "post"})
                 .then(function(response) {
                   if (response.status === 500) {
                     location.reload();

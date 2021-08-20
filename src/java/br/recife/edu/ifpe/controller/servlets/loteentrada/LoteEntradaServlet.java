@@ -10,6 +10,7 @@ import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +30,7 @@ public class LoteEntradaServlet extends HttpServlet {
           throws ServletException, IOException {
     int codigo = Integer.parseInt(request.getParameter("codigo"));
     LoteEntrada loteEntrada = RepositorioLoteEntrada.getCurrentInstance().read(codigo);
+    
     String responseJSON = "{\"codigo\":" + loteEntrada.getCodigo() + ", "
                           + "\"descricao\": \"" + loteEntrada.getDescricao() + "\", "
                           + "\"itens\": [";
@@ -40,6 +42,7 @@ public class LoteEntradaServlet extends HttpServlet {
       }
     }
     responseJSON += "]}";
+    
     response.setContentType("text/plain");
     try (PrintWriter out = response.getWriter()) {
       out.println(responseJSON);
@@ -52,6 +55,7 @@ public class LoteEntradaServlet extends HttpServlet {
     HttpSession session = request.getSession();
     LoteEntrada loteEntrada = (LoteEntrada) session.getAttribute("loteEntrada");
     Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
+    
     for (ItemEntrada itemEntrada : loteEntrada.getItens()) {
       if (itemEntrada.getQuantidade() > 10) {
         session.setAttribute("msg", "A quantidade máxima permitida do produto " + itemEntrada.getProduto().getNome() + " foi excedida.");
@@ -59,6 +63,7 @@ public class LoteEntradaServlet extends HttpServlet {
         return;
       }
     }
+    
     for (ItemEntrada itemEntrada : loteEntrada.getItens()) {
       for (ItemEstoque itemEstoque : estoque.getItens()) {
         if (itemEntrada.getProduto().getCodigo() == itemEstoque.getProduto().getCodigo()) {
@@ -67,9 +72,17 @@ public class LoteEntradaServlet extends HttpServlet {
         }
       }
     }
+    
+    String descricao = request.getParameter("descricao");
+    loteEntrada.setDescricao(descricao);
     RepositorioLoteEntrada.getCurrentInstance().create(loteEntrada);
     session.removeAttribute("loteEntrada");
     session.setAttribute("msg", "O lote de entrada foi inserido com sucesso.");
+    
+    List <LoteEntrada> lista = RepositorioLoteEntrada.getCurrentInstance().readAll();
+    for (LoteEntrada le : lista) {
+      System.out.println(le.getCodigo());
+    }
   }
 
   @Override
@@ -79,6 +92,7 @@ public class LoteEntradaServlet extends HttpServlet {
     int codigo = Integer.parseInt(req.getParameter("codigo"));
     HttpSession session = req.getSession();
     LoteEntrada loteEntrada = (LoteEntrada) session.getAttribute("loteEntrada");
+    
     if (loteEntrada == null) {
       loteEntrada = new LoteEntrada();
       session.setAttribute("loteEntrada", loteEntrada);
@@ -103,7 +117,9 @@ public class LoteEntradaServlet extends HttpServlet {
         loteEntrada.addItem(item);
         session.setAttribute("msg", "O produto " + p.getNome() + " foi inserido no lote com sucesso.");
       }
-    } else if (operacao.equals("remover")) {
+    }
+    
+    if (operacao.equals("remover")) {
       for (ItemEntrada i : loteEntrada.getItens()) {
         if (i.getProduto().getCodigo() == codigo) {
           if (i.getQuantidade() == 1) {

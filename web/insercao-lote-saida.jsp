@@ -89,6 +89,10 @@
         </tr>
       </c:if>
     </table>
+    <div>
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" cols="41"></textarea>
+    </div>
     <div><button id="botaoCadastrar" onclick="cadastrarLoteSaida()">Cadastrar</button></div>
   </c:if>
   <div>
@@ -120,8 +124,10 @@
     }
 
     function cadastrarLoteSaida() {
-      fetch("LoteSaidaServlet" + funcionario, {method: "post"}).then(function () {
-        location.href = "index.html";
+      let textInput = document.getElementById("descricao");
+      let value = textInput.value;
+      fetch("LoteSaidaServlet?descricao=" + value, {method: "post"}).then(function () {
+        location.href = "lote-saida-apresentacao.jsp";
       });
     }
   </script>

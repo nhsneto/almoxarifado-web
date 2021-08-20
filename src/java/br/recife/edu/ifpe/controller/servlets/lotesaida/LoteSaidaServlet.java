@@ -8,6 +8,7 @@ import br.recife.edu.ifpe.model.classes.LoteSaida;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
+import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaida;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +35,12 @@ public class LoteSaidaServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    LoteSaida loteSaida = (LoteSaida) session.getAttribute("loteSaida");
+    String descricao = request.getParameter("descricao");
+    loteSaida.setDescricao(descricao);
+    RepositorioLoteSaida.getCurrentInstance().create(loteSaida);
+    session.setAttribute("msg", "O lote de saída foi retirado com sucesso.");
   }
 
   @Override
@@ -46,10 +53,12 @@ public class LoteSaidaServlet extends HttpServlet {
 
     if (loteSaida == null) {
       loteSaida = new LoteSaida();
+      loteSaida.setCodigo((int) (Math.random() * 100000));
       session.setAttribute("loteSaida", loteSaida);
     }
 
     // Item:
+    
     if (operacao.equals("adicionar-item")) {
       Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
       boolean itemExistente = false;

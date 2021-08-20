@@ -8,14 +8,14 @@ public class LoteEntrada {
   private int codigo;
   private List<ItemEntrada> itens;
   private Date data;
-  /*
-   * Neste campo ficarão armazenadas as informações de documentos
-   */
+  
+  // Neste campo ficarão armazenadas as informações de documentos
   private String descricao;
 
   public LoteEntrada() {
     this.itens = new ArrayList<>();
     this.data = new Date();
+    this.codigo = (int) (Math.random() * 100000);
   }
 
   public int getCodigo() {

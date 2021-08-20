@@ -24,8 +24,6 @@
       h1 + p {color:#1d7d36; font-weight: 600;}
       p + #botaoNovoProduto {margin: 0 0 32px;}
       #links {margin-top: 2em;}
-      #links > ul {padding: 0;}
-      #links li {list-style: none; margin-bottom: .5em;}
     </style>
   </head>
   <body>
@@ -72,10 +70,7 @@
       <% } %>
     </table>
     <div id="links">
-      <ul>
-        <li><a href="index.html" id="home">Página Inicial</a></li>
-        <li><a href="insercao-lote-entrada.jsp">Inserção - Lote de Entrada</a></li>
-      </ul>
+      <a href="index.html" id="home">Página Inicial</a>
     </div>
     <script>
       var modalCadastro = document.getElementById("modal-cadastro");

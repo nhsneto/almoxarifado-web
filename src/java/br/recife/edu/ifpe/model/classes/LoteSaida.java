@@ -21,6 +21,7 @@ public class LoteSaida {
   public LoteSaida() {
     this.itens = new ArrayList<>();
     this.data = new Date();
+    this.codigo = (int) (Math.random() * 100000);
   }
 
   public int getCodigo() {
@@ -65,5 +66,13 @@ public class LoteSaida {
 
   public void setResponsavel(Funcionario responsavel) {
     this.responsavel = responsavel;
+  }
+  
+  public int getQuantidadeTotal() {
+    int total = 0;
+    for (ItemSaida i : this.itens) {
+      total += i.getQuantidade();
+    }
+    return total;
   }
 }
