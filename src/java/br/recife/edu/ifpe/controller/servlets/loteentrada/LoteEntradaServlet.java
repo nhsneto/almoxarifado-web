@@ -5,6 +5,7 @@ import br.recife.edu.ifpe.model.classes.ItemEntrada;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioData;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
@@ -76,13 +77,9 @@ public class LoteEntradaServlet extends HttpServlet {
     String descricao = request.getParameter("descricao");
     loteEntrada.setDescricao(descricao);
     RepositorioLoteEntrada.getCurrentInstance().create(loteEntrada);
+    RepositorioData.getInstance().create(loteEntrada.getData());
     session.removeAttribute("loteEntrada");
     session.setAttribute("msg", "O lote de entrada foi inserido com sucesso.");
-    
-    List <LoteEntrada> lista = RepositorioLoteEntrada.getCurrentInstance().readAll();
-    for (LoteEntrada le : lista) {
-      System.out.println(le.getCodigo());
-    }
   }
 
   @Override

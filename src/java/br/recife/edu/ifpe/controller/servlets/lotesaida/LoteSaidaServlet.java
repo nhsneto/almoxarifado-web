@@ -6,6 +6,7 @@ import br.recife.edu.ifpe.model.classes.ItemEstoque;
 import br.recife.edu.ifpe.model.classes.ItemSaida;
 import br.recife.edu.ifpe.model.classes.LoteSaida;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioData;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaida;
@@ -61,6 +62,7 @@ public class LoteSaidaServlet extends HttpServlet {
     String descricao = request.getParameter("descricao");
     loteSaida.setDescricao(descricao);
     RepositorioLoteSaida.getCurrentInstance().create(loteSaida);
+    RepositorioData.getInstance().create(loteSaida.getData());
     session.removeAttribute("loteSaida");
     session.setAttribute("msg", "O lote de saída foi retirado com sucesso.");
   }

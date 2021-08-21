@@ -23,6 +23,7 @@
       .botaoRemover {border: none; background-color: #d40d0d; color: #fff; padding: 2px 10px;}
       .botaoRemover:active {background-color: #f00;}
       #botaoCadastrar {display: block; margin-bottom: 2em;}
+      label[for] {position: relative; bottom: 1em; font-weight: 900;}
     </style>
   </head>
   <body>
@@ -83,7 +84,7 @@
       </c:forEach>
       <c:if test="${loteSaida.responsavel != null}">
         <tr>
-          <th>Responsável:</th>
+          <th>Responsável</th>
           <td colspan="2">${loteSaida.responsavel.nome}</td>
           <td><button class="botaoRemover" onclick="removerFuncionario()">-</button></td>
         </tr>

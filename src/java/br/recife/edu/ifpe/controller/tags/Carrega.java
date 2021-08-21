@@ -5,12 +5,14 @@ import br.recife.edu.ifpe.model.classes.Funcionario;
 import br.recife.edu.ifpe.model.classes.LoteEntrada;
 import br.recife.edu.ifpe.model.classes.LoteSaida;
 import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioData;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
 import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaida;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -50,6 +52,10 @@ public class Carrega extends SimpleTagSupport {
       case "Estoque":
         Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
         getJspContext().setAttribute("estoque", estoque, PageContext.PAGE_SCOPE);
+        break;
+      case "Data":
+        List<Date> data = RepositorioData.getInstance().readAll();
+        getJspContext().setAttribute("data", data, PageContext.PAGE_SCOPE);
         break;
       default:
         break;
