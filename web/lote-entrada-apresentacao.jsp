@@ -13,6 +13,7 @@
       #links {margin-top: 2em;}
       th, td {border: 1px solid #888; text-align: center;}
       .modal {position: absolute; top: 100px; left: 530px;}
+      .modal p {font-weight: 900; color: #000;}
       .tabelaItens {margin-bottom: 2em;}
     </style>
   </head>
@@ -53,6 +54,18 @@
               
               let tabela = document.createElement("table");
               tabela.setAttribute("class", "tabelaItens");
+              let header1 = document.createElement("th");
+              header1.innerHTML = "Código";
+              let header2 = document.createElement("th");
+              header2.innerHTML = "Produto";
+              let header3 = document.createElement("th");
+              header3.innerHTML = "Quantidade";
+              let linhaHeader = document.createElement("tr");
+              linhaHeader.appendChild(header1);
+              linhaHeader.appendChild(header2);
+              linhaHeader.appendChild(header3);
+              tabela.appendChild(linhaHeader);
+            
               for (let i = 0; i < lote.itens.length; i++) {
                 let celula1 = document.createElement("td");
                 celula1.innerHTML = lote.itens[i].codigo;

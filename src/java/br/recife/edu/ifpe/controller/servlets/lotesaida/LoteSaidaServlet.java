@@ -30,6 +30,27 @@ public class LoteSaidaServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    int codigo = Integer.parseInt(request.getParameter("codigo"));
+    LoteSaida ls = RepositorioLoteSaida.getCurrentInstance().read(codigo);
+    
+    String loteSaidaJson = "{\"codigo\": " + ls.getCodigo() + ", "
+                          + "\"descricao\": \"" + ls.getDescricao() + "\", "
+                          + "\"responsavel\": \"" + ls.getResponsavel().getNome() + "\", "
+                          + "\"itens\": [";
+    for (ItemSaida i : ls.getItens()) {
+      loteSaidaJson += "{\"codigo\": " + i.getCodigo() + ", "
+                      + "\"nomeProduto\": \"" + i.getProduto().getNome() + "\", "
+                      + "\"quantidade\": " + i.getQuantidade() + "}";
+      if (ls.getItens().indexOf(i) != ls.getItens().size() - 1) {
+        loteSaidaJson += ", ";
+      }
+    }
+    loteSaidaJson += "]}";
+    
+    response.setContentType("text/plain");
+    try (PrintWriter out = response.getWriter()) {
+      out.println(loteSaidaJson);
+    }
   }
 
   @Override
@@ -40,6 +61,7 @@ public class LoteSaidaServlet extends HttpServlet {
     String descricao = request.getParameter("descricao");
     loteSaida.setDescricao(descricao);
     RepositorioLoteSaida.getCurrentInstance().create(loteSaida);
+    session.removeAttribute("loteSaida");
     session.setAttribute("msg", "O lote de saída foi retirado com sucesso.");
   }
 
