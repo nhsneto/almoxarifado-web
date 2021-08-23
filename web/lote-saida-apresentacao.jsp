@@ -50,7 +50,7 @@
             response.text().then(function(text) {
             let lote = JSON.parse(text);
             let titulo = document.createElement("h1");
-            titulo.innerHTML = "Visualizar Lote Entrada";
+            titulo.innerHTML = "Visualizar Lote Saída";
             let frase = document.createElement("p");
             frase.innerHTML = "Codigo: " + lote.codigo + "<br/>Responsável: " + lote.responsavel +
             "<br/>Descrição: " + lote.descricao;
